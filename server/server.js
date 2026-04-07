@@ -17,7 +17,15 @@ await connectCloudinary()
 //Middleware
 app.use(cors())
 
-app.use(clerkMiddleware())
+app.use(
+  clerkMiddleware({
+    publicRoutes: [
+      '/',
+      '/api/course/all',
+      '/api/course/:id'
+    ]
+  })
+)
 
 //Routes
 app.get('/', (req,res)=>res.send("API Working"))

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState, useContext} from 'react'
-import uniqid from 'uniqid';
 import Quill from 'quill';
 import { assets } from '../../assets/assets';
 import { AppContext } from '../../context/AppContext';
@@ -28,7 +27,7 @@ const AddCourse = () => {
       const title = prompt('Enter Chapter Name');
       if(title){
         const newChapter={
-          chapterId : uniqid(),
+         chapterId: crypto.randomUUID(),
           chapterTitle:title,
           chapterContent:[],
           collapsed:false,
@@ -68,7 +67,8 @@ const AddCourse = () => {
           const newLecture ={
             ...lectureDetails,
             lectureOrder: chapter.chapterContent.length>0 ? chapter.chapterContent.slice(-1)[0].lectureOrder + 1:1,
-            lectureId: uniqid()
+        
+lectureId: crypto.randomUUID()
           };
           chapter.chapterContent.push(newLecture);
         }

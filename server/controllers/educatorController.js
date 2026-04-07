@@ -9,8 +9,8 @@ import User from "../models/User.js";
 
 export const updateRoleToEducator = async (req,res)=>{
     try{
-        const userId = "user_2xgpzpbfybiTOZsPnL7DMpyOPEi"
-        await clerkClient.users.updateUserMetadata(userId, {
+    const userId = req.auth.userId  
+            await clerkClient.users.updateUserMetadata(userId, {
             publicMetadata:{
                 role: 'educator',
             }
@@ -27,7 +27,7 @@ export const addCourse = async (req,res)=>{
     try{
         const {courseData} = req.body
         const imageFile = req.file
-        const educatorId = "user_2xgpzpbfybiTOZsPnL7DMpyOPEi"
+        const educatorId = req.auth.userId  
 
          if(!imageFile){
             return res.json({success : false, message: 'Thumbnail is Not Attached'})
@@ -49,7 +49,7 @@ export const addCourse = async (req,res)=>{
 
 export const getEducatorCourses = async (req,res)=>{
     try{
-        const educator = "user_2xgpzpbfybiTOZsPnL7DMpyOPEi"
+        const educator = req.auth.userId  
         const courses = await Course.find({educator})
         res.json({success : true, courses})
     }catch(error){
@@ -61,7 +61,7 @@ export const getEducatorCourses = async (req,res)=>{
 
 export const educatorDashboardData = async(req,res)=>{
   try{
-    const educator = "user_2xgpzpbfybiTOZsPnL7DMpyOPEi";
+    const educator =  req.auth.userId  
 
     const courses = await Course.find({educator});
     const totalCourses = courses.length;
@@ -105,7 +105,8 @@ export const educatorDashboardData = async(req,res)=>{
 
 export const getEnrolledStudentsData = async(req,res)=>{
     try{
-        const educator = "user_2xgpzpbfybiTOZsPnL7DMpyOPEi";
+        const educator =  req.auth.userId  
+
         const courses = await Course.find({educator});
         const courseIds = courses.map(course=> course._id);
 
